@@ -2,6 +2,7 @@ package com.matheus.creditassessor.services;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.matheus.creditassessor.clients.CardResourceClient;
 import com.matheus.creditassessor.clients.CustomerResourceClient;
+import com.matheus.creditassessor.dtos.request.CardRequestData;
 import com.matheus.creditassessor.dtos.response.ApprovedCardResponse;
+import com.matheus.creditassessor.dtos.response.CardRequestProtocolResponse;
 import com.matheus.creditassessor.dtos.response.CardResponse;
 import com.matheus.creditassessor.dtos.response.CustomerCardResponse;
 import com.matheus.creditassessor.dtos.response.CustomerDataResponse;
@@ -18,6 +21,7 @@ import com.matheus.creditassessor.dtos.response.CustomerEvaluateResponse;
 import com.matheus.creditassessor.dtos.response.CustomerSituationResponse;
 import com.matheus.creditassessor.exceptions.InternalServerErrorException;
 import com.matheus.creditassessor.exceptions.NotFoundException;
+import com.matheus.creditassessor.mqueue.CardIssuePublisher;
 
 import feign.FeignException.FeignClientException;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +30,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CreditAssessorService {
 
+	private static final String PUBLISH_FAILED = "Falha ao publicar mensagem";
 	private static final String CUSTOMER_DATA_NOT_FOUND = "Dados do cliente não encontrados para o CPF informado";
-	
+
 	private final CustomerResourceClient customersClient;
 	private final CardResourceClient cardsClient;
+	private final CardIssuePublisher publisher;
 
 	public CustomerSituationResponse getCustomerSituation(String cpf)
 			throws NotFoundException, InternalServerErrorException {
@@ -75,6 +81,16 @@ public class CreditAssessorService {
 				throw new NotFoundException(CUSTOMER_DATA_NOT_FOUND);
 			}
 			throw new InternalServerErrorException(e.getMessage());
+		}
+	}
+
+	public CardRequestProtocolResponse requestCardIssuance(CardRequestData data) throws InternalServerErrorException {
+		try {
+			publisher.requestCard(data);
+			var protocol = UUID.randomUUID().toString();
+			return CardRequestProtocolResponse.builder().protocol(protocol).build();
+		} catch (Exception e) {
+			throw new InternalServerErrorException(PUBLISH_FAILED);
 		}
 	}
 

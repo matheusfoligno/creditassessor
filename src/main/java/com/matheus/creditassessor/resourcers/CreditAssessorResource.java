@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.matheus.creditassessor.dtos.request.CardRequestData;
 import com.matheus.creditassessor.dtos.request.CustomerEvaluateDataRequest;
+import com.matheus.creditassessor.dtos.response.CardRequestProtocolResponse;
 import com.matheus.creditassessor.dtos.response.CustomerEvaluateResponse;
 import com.matheus.creditassessor.dtos.response.CustomerSituationResponse;
 import com.matheus.creditassessor.exceptions.InternalServerErrorException;
@@ -36,6 +38,12 @@ public class CreditAssessorResource {
 			throws NotFoundException, InternalServerErrorException {
 		CustomerEvaluateResponse response = creditAssessorService.performCreditAssessment(request.getCpf(),
 				request.getIncome());
+		return ResponseEntity.ok(response);
+	}
+	
+	@PostMapping("request-cards")
+	public ResponseEntity requestCard(@RequestBody CardRequestData data) throws InternalServerErrorException {
+		CardRequestProtocolResponse response = creditAssessorService.requestCardIssuance(data);
 		return ResponseEntity.ok(response);
 	}
 }
