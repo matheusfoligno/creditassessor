@@ -1,0 +1,11 @@
+2022-10-03 21:47:56.105  INFO 5180 --- [main] c.m.c.CreditassesorApplicationTests      : Starting CreditassesorApplicationTests using Java 11.0.16 on LAPTOP-RDK08IJ3 with PID 5180 (started by mathe in C:\Users\mathe\projetos-pessoais\creditassessor)
+2022-10-03 21:47:56.108  INFO 5180 --- [main] c.m.c.CreditassesorApplicationTests      : No active profile set, falling back to 1 default profile: "default"
+2022-10-03 21:47:59.960  INFO 5180 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=5d6d0e32-1a70-3ec6-89bd-ccdb9246a7ab
+2022-10-03 21:48:04.707  INFO 5180 --- [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'customers' URL not provided. Will try picking an instance via load-balancing.
+2022-10-03 21:48:04.943  INFO 5180 --- [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'cards' URL not provided. Will try picking an instance via load-balancing.
+2022-10-03 21:48:11.769  INFO 5180 --- [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2022-10-03 21:48:12.079  WARN 5180 --- [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-10-03 21:48:12.118  INFO 5180 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 17 endpoint(s) beneath base path '/actuator'
+2022-10-03 21:48:12.311  INFO 5180 --- [main] c.m.c.CreditassesorApplicationTests      : Started CreditassesorApplicationTests in 18.649 seconds (JVM running for 21.302)
+2022-10-03 21:48:13.753  INFO 5180 --- [SpringApplicationShutdownHook] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2022-10-03 21:48:13.760  INFO 5180 --- [SpringApplicationShutdownHook] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application CREDITASSESSOR with eureka with status DOWN

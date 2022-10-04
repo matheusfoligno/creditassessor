@@ -1,4 +1,4 @@
-package com.matheus.creditassesor;
+package com.matheus.creditassessor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
